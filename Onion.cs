@@ -4,21 +4,23 @@ using UnityEngine;
 
 public class Onion : MonoBehaviour
 {
+    AudioManager audioManager;
     // Particle system for chopping effect
     public ParticleSystem chopParticles;
 
     // Small onion pieces
     public GameObject[] onionPieces;
-
+    
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+    
     
     public void Chop()
     {
-        // Play chopping particle effect if assigned
-        //if (chopParticles != null)
-        //{
-        // chopParticles.Play();
-       // }
-
+        audioManager.PlaySFX(audioManager.Chopping);
+        
         // Deactivate the main onion object
         gameObject.SetActive(false);
 
