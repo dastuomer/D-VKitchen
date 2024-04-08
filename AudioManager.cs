@@ -23,6 +23,12 @@ public void PlaySFX(AudioClip clip)
 {
     SFXSource.PlayOneShot(clip);
 }
+
+private void Start()
+    {
+        musicSource.clip = Welcome;
+        musicSource.Play();
+    }
     
     
 }
