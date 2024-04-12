@@ -4,41 +4,47 @@ using UnityEngine;
 
 public class Zucchini : MonoBehaviour
 {
-    // Particle system for chopping effect
+    AudioManager audioManager; // reference to the AudioManager script
+
+    // creating chopping effect
     public ParticleSystem chopParticles;
 
-    // Small onion pieces
+    // small zucchini pieces
     public GameObject[] zucchiniPieces;
 
+    private void Awake()
+    {
+        // finding and getting the AudioManager component attached to a GameObject tagged as "Audio"
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
 
     public void ChopZucchini()
     {
-        // Play chopping particle effect if assigned
-        // if (chopParticles != null)
-        // {
-        //     chopParticles.Play();
-        // }
+        // play the chopping sound
+        audioManager.PlaySFX(audioManager.Chopping);
 
-        // Deactivate the main onion object
+        // deactivate the whole zucchini object
         gameObject.SetActive(false);
 
-        // Activate chopped onion pieces
+        // activate  the chopped zucchini pieces
         foreach (GameObject piece in zucchiniPieces)
         {
+            // playing the chopping sound effect for each piece
+            audioManager.PlaySFX(audioManager.Chopping);
+            // activate each GameObject representing a chopped zucchini piece
             piece.SetActive(true);
         }
 
-
-
-        // Destroy the onion object after a delay
+        // destroy the GameObject after 1 second
         Destroy(gameObject, 1f);
     }
 
-
     void OnCollisionEnter(Collision collision)
     {
+        // check if it's colliding with the knife
         if (collision.gameObject.CompareTag("Knife"))
         {
+            // if it is the knife, chop the zucchini
             ChopZucchini();
         }
     }
